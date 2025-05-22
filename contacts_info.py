@@ -2,48 +2,54 @@ from tkinter import  *
 from tkinter import ttk
 import tkinter.messagebox as msg
 from file_manager import *
-# from validator import *
+from validator import *
 
 
 
-contact_list = read_from_file("persons.dat")
+contact_list = read_from_file("contact.dat")
 
-def load_data(person_list):
-    person_list = read_from_file("persons.dat")
+
+
+def load_data(contact_list):
+    contact_list = read_from_file("contacts.dat")
     for row in table.get_children():
         table.delete(row)
 
-    for person in person_list:
-        table.insert("", END, values=person)
+    for contact in contact_list:
+        table.insert("", END, values=contact)
 
 
 def reset_form():
-    id.set(len(person_list) + 1)
+    id.set(len(contact_list) + 1)
     name.set("")
     family.set("")
-    account.set(0)
-    load_data(person_list)
+    phone_number.set("")
+    address.set("")
+    title.set("")
+    load_data(contact_list)
 
 
 def save_btn_click():
-    person = (id.get(), name.get(), family.get(), account.get())
-    errors = person_validator(person)
+    person = (id.get(), name.get(), family.get(), phone_number.get(), address.get(), title.get())
+    errors = contact_validator(contact)
     if errors:
         msg.showerror("Errors", "\n".join(errors))
     else:
         msg.showinfo("Saved", "Person saved")
-        person_list.append(person)
-        write_to_file("persons.dat", person_list)
+        contact_list.append(contact)
+        write_to_file("contact.dat", contact_list)
         reset_form()
 
 
 def table_select(x):
-    selected_person = table.item(table.focus())["values"]
-    if selected_person:
-        id.set(selected_person[0])
-        name.set(selected_person[1])
-        family.set(selected_person[2])
-        account.set(selected_person[3])
+    selected_contact = table.item(table.focus())["values"]
+    if selected_contact:
+        id.set(selected_contact[0])
+        name.set(selected_contact[1])
+        family.set(selected_contact[2])
+        phone_number.set(selected_contact[3])
+        address.set(selected_contact[4])
+        title_number.set(selected_contact[5])
 
 
 def edit_btn_click():
@@ -57,7 +63,7 @@ def remove_btn_click():
 
 
 
-#appear
+#appearance
 
 contacts=Tk()
 contacts.title('contacts')
