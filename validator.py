@@ -16,7 +16,7 @@ def contact_validator(contact):
     if not (type(contact[3]) == int and contact[3]>0):
         errors.append('contact number Amount must be an integer > 0')
 
-     if not (type(contact[4]) == str and re.match(r"^[a-zA-Z\s]{3,70}$", contact[4])):
+    if not (type(contact[4]) == str and re.match(r"^[a-zA-Z\s]{3,70}$", contact[4])):
             errors.append('contact address is Invalid')
 
     if not (type(contact[5]) == str and re.match(r"^[a-zA-Z\s]{3,30}$", contact[5])):
