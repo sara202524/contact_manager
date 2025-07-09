@@ -5,13 +5,10 @@ from file_manager import *
 from validator import *
 
 
-
 contact_list = read_from_file("contact.dat")
 
-
-
 def load_data(contact_list):
-    contact_list = read_from_file("contacts.dat")
+    contact_list = read_from_file("contact.dat")
     for row in table.get_children():
         table.delete(row)
 
@@ -31,12 +28,12 @@ def reset_form():
 
 def save_btn_click():
     person = (id.get(), name.get(), family.get(), phone_number.get(), address.get(), title.get())
-    errors = contact_validator(contact)
+    errors = contact_validator(person)
     if errors:
         msg.showerror("Errors", "\n".join(errors))
     else:
         msg.showinfo("Saved", "Person saved")
-        contact_list.append(contact)
+        contact_list.append(person)
         write_to_file("contact.dat", contact_list)
         reset_form()
 
@@ -49,7 +46,7 @@ def table_select(x):
         family.set(selected_contact[2])
         phone_number.set(selected_contact[3])
         address.set(selected_contact[4])
-        title_number.set(selected_contact[5])
+        title.set(selected_contact[5])
 
 
 def edit_btn_click():
@@ -60,46 +57,46 @@ def remove_btn_click():
     pass
 
 
-
-
-
 #appearance
+window = Tk()
+window.title('contacts')
+window.geometry('1050x400')
 
-contacts=Tk()
-contacts.title('contacts')
-contacts.geometry('1050x400')
 
 #id
-Label(contacts,text='id').place(x=80,y=20)
+Label(window,text='id').place(x=30,y=20)
 id = IntVar(value=1)
-Entry(contacts, textvariable=id, state="readonly").place(x=100, y=20)
+Entry(window, textvariable=id, state="readonly").place(x=100, y=20)
 
 #name
-Label(contacts,text='Name').place(x=60,y=60)
+Label(window,text='Name').place(x=30,y=60)
 name = StringVar()
-Entry(contacts, textvariable=name).place(x=100, y=60)
+Entry(window, textvariable=name).place(x=100, y=60)
 
 #family
-Label(contacts,text='Family').place(x=50,y=100)
+Label(window,text='Family').place(x=30,y=100)
 family = StringVar()
-Entry(contacts, textvariable=family).place(x=100, y=100)
+Entry(window, textvariable=family).place(x=100, y=100)
 
 #number
-Label(contacts,text='phone number').place(x=10,y=140)
+Label(window,text='phone no').place(x=30,y=140)
 phone_number=StringVar()
-Entry(contacts,textvariable=phone_number).place(x=100,y=140)
+Entry(window,textvariable=phone_number).place(x=100,y=140)
 
 #address
-Label(contacts,text='address').place(x=50,y=180)
+Label(window,text='address').place(x=30,y=180)
 address=StringVar()
-Entry(contacts,textvariable=address).place(x=100,y=180)
+Entry(window,textvariable=address).place(x=100,y=180)
 
 #title
-Label(contacts,text='title').place(x=70,y=220)
+Label(window,text='title').place(x=30,y=220)
 title=StringVar()
-Entry(contacts,textvariable=title).place(x=100,y=220)
+Entry(window,textvariable=title).place(x=100,y=220)
 
-table = ttk.Treeview(contacts, columns=[1, 2, 3, 4, 5, 6], show="headings")
+table = ttk.Treeview(window, columns=[1, 2, 3, 4, 5, 6], show="headings")
+table.place(x=300, y=20)
+
+
 table.heading(1, text="Id")
 table.heading(2, text="Name")
 table.heading(3, text="Family")
@@ -116,41 +113,20 @@ table.column(4, width=130)
 table.column(5, width=200)
 table.column(6, width=100)
 
-# table.bind("<<TreeviewSelect>>", table_select)
-
-table.place(x=300, y=20)
+table.bind("<<TreeviewSelect>>", table_select)
 
 
 
-Button(contacts, text="Save", width=6, command=save_btn_click).place(x=20, y=220)
-Button(contacts, text="Edit", width=6, command=edit_btn_click).place(x=90, y=220)
-Button(contacts, text="Remove", width=6, command=remove_btn_click).place(x=160, y=220)
-Button(contacts, text="Clear", width=6, command=reset_form).place(x=20, y=180, width=190)
-
-reset_form()
+Button(window, text="Save", width=6, command=save_btn_click).place(x=70, y=320)
+Button(window, text="Edit", width=6, command=edit_btn_click).place(x=137, y=320)
+Button(window, text="Remove", width=6, command=remove_btn_click).place(x=207, y=320)
+Button(window, text="Clear", width=6, command=reset_form).place(x=70, y=280, width=190)
 
 
 
+window.mainloop()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-contacts.mainloop()
 
 
 
